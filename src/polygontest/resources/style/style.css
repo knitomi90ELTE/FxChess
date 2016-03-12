@@ -1,0 +1,12 @@
+.my-tile {
+    -fx-stroke-width: 1;
+    -fx-stroke-type: centered;
+}
+
+.active-tile {
+    -fx-stroke: lightskyblue;
+}
+
+.passive-tile {
+    -fx-stroke: black;
+}
