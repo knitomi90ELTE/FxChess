@@ -38,6 +38,7 @@ public class Tile extends StackPane {
         imageView = new ImageView();
         imageView.setFitHeight(75.0);
         imageView.setFitWidth(75.0);
+        imageView.setPreserveRatio(true);
         imageView.setMouseTransparent(true);
         this.getChildren().add(imageView);
     }

@@ -13,4 +13,9 @@
 
 .my-label {
     -fx-font-size: 25;
+    -fx-text-alignment: center;
+    -fx-column-halignment: center;
+    -fx-column-halignment: center;
+    -fx-alignment: center-left;
+
 }

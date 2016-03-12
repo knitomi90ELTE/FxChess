@@ -45,12 +45,12 @@ public class ChessGrid extends GridPane{
                 Coord c = new Coord(col, row);
                 Tile tile = new Tile(c);
                 if(row == 0 || row == 1){
-                    Piece p = PieceGenerator.getPiece(c);
+                    Piece p = PieceGenerator.getPiece(PlayerDark, c);
                     tile.setPiece(p);
                     PlayerDark.addPiece(p);
                 }
                 if(row == 6 || row == 7){
-                    Piece p = PieceGenerator.getPiece(c);
+                    Piece p = PieceGenerator.getPiece(PlayerLight, c);
                     tile.setPiece(p);
                     PlayerLight.addPiece(p);
                 }
@@ -58,9 +58,6 @@ public class ChessGrid extends GridPane{
             }
         }
     }
-
-
-
 
     private void initListener(){
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -91,6 +88,12 @@ public class ChessGrid extends GridPane{
     }
 
     private void movePiece(Tile clicked) {
+
+        if(!selectedPiece.canMoveThere(clicked.getPosition())){
+            handleMoveError();
+            return;
+        }
+
         if(clicked.isHasPiece()){
             Piece clickedPiece = clicked.getPiece();
             if(currentPlayer().isOwner(clickedPiece)){
@@ -110,8 +113,12 @@ public class ChessGrid extends GridPane{
                 currentPlayer().setScore(currentPlayer().getScore() + clickedPiece.getValue());
             }
         }
+
+
+
         selectedTile.removePiece();
         clicked.setPiece(selectedPiece);
+        selectedPiece.setPosition(clicked.getPosition());
         selectedTile.changeState();
         setSelectionsNull();
         playerOnTurn = (playerOnTurn + 1) % 2;
@@ -128,6 +135,9 @@ public class ChessGrid extends GridPane{
                 selectedTile = clicked;
                 selectedTile.changeState();
                 selectedPiece = clicked.getPiece();
+
+
+
             } else {
                 showInvalidSelectionError();
             }

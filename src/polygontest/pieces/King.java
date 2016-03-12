@@ -1,9 +1,23 @@
 package polygontest.pieces;
 
 import polygontest.helper.Coord;
+import polygontest.player.Player;
 
 public class King extends Piece {
-    public King(String url, Coord position) {
-        super(url, 0, position);
+
+    public King(String url, Coord c, Player player) {
+        super(url);
+        this.value = 0;
+        this.position = c;
+        this.owner = player;
+    }
+
+
+    @Override
+    public boolean canMoveThere(Coord c) {
+        if((c.getX() == position.getX()+1 || c.getX() == position.getX()-1) && (c.getY() == position.getY()+1 || c.getY() == position.getY()-1)){
+            return true;
+        }
+        return false;
     }
 }

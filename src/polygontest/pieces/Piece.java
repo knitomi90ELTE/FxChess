@@ -2,19 +2,20 @@ package polygontest.pieces;
 
 import javafx.scene.image.Image;
 import polygontest.helper.Coord;
+import polygontest.player.Player;
 
-public class Piece extends Image{
+public abstract class Piece extends Image{
 
     protected int value;
     protected Coord position;
     protected boolean hasMoved = false;
+    protected Player owner;
 
-    public Piece(String url, int value, Coord position){
+    public Piece(String url){
         super(url);
-        this.value = value;
-        this.position = position;
     }
 
+    public abstract boolean canMoveThere(Coord c);
 
     public int getValue() {
         return value;

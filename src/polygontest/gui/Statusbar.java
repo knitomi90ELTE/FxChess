@@ -15,8 +15,8 @@ public class Statusbar extends HBox{
 
         players = new PlayerPanel[]{PlayerLight, PlayerDark};
 
-        setMinSize(800, 50);
-        setSpacing(100);
+        setMinHeight(50);
+        setSpacing(50);
         getChildren().addAll(PlayerLight, PlayerDark);
 
         PlayerLight.setActive();

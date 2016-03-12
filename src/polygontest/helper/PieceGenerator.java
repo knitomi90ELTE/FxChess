@@ -1,6 +1,7 @@
 package polygontest.helper;
 
 import polygontest.pieces.*;
+import polygontest.player.Player;
 
 public class PieceGenerator {
 
@@ -19,7 +20,7 @@ public class PieceGenerator {
     private static final String BKing = "polygontest/resources/pieces/BKing.png";
 
 
-    public static Piece getPiece(Coord c){
+    public static Piece getPiece(Player p, Coord c){
         int row = c.getY();
         int col = c.getX();
 
@@ -27,18 +28,18 @@ public class PieceGenerator {
 
         if(row == 7 || row == 0){
             if(col == 0 || col == 7){
-                return new Rook(b ? BRook : WRook, c);
+                return new Rook(b ? BRook : WRook, c, p);
             }else if(col == 1 || col == 6){
-                return new Knight(b ? BKnight : WKnight, c);
+                return new Knight(b ? BKnight : WKnight, c, p);
             }else if(col == 2 || col == 5){
-                return new Bishop(b ? BBishop : WBishop, c);
+                return new Bishop(b ? BBishop : WBishop, c, p);
             }else if(col == 4){
-                return new King(b ? BKing : WKing, c);
+                return new King(b ? BKing : WKing, c, p);
             }else{
-                return new Queen(b ? BQueen : WQueen, c);
+                return new Queen(b ? BQueen : WQueen, c, p);
             }
         }else{
-            return new Pawn((row == 1) ? BPawn : WPawn, c);
+            return new Pawn((row == 1) ? BPawn : WPawn, c, p);
         }
 
     }

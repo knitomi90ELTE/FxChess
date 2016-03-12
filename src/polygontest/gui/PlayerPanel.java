@@ -24,8 +24,8 @@ public class PlayerPanel extends HBox {
         imageView.setFitWidth(35);
 
         setSpacing(10.0);
-        setHeight(100);
-        setWidth(400);
+        //setHeight(100);
+        //setWidth(400);
         getChildren().addAll(nameLabel, scoreLabel, imageView);
     }
 

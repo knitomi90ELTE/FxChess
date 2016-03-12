@@ -1,6 +1,7 @@
 package polygontest;
 
 import javafx.application.Application;
+import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -25,6 +26,9 @@ public class PolygonTest extends Application {
         borderPane.setCenter(board);
         scene = new Scene(borderPane, 800, 850);
         scene.getStylesheets().add("polygontest/resources/style/style.css");
+        primaryStage.setResizable(false);
+
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
