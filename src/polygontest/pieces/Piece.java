@@ -1,13 +1,8 @@
 package polygontest.pieces;
 
-
 import javafx.scene.image.Image;
 import polygontest.helper.Coord;
 
-
-/**
- * Created by knizner on 2016.03.12..
- */
 public class Piece extends Image{
 
     protected int value;

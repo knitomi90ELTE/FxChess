@@ -1,13 +1,9 @@
 package polygontest.player;
 
 import polygontest.pieces.Piece;
-
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by knizner on 2016.03.12..
- */
 public class Player {
 
     private List<Piece> pieces = new LinkedList<>();

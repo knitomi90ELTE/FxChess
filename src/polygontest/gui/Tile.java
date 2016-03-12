@@ -7,9 +7,6 @@ import javafx.scene.shape.Rectangle;
 import polygontest.helper.Coord;
 import polygontest.pieces.Piece;
 
-/**
- * Created by knizner on 2016.03.12..
- */
 public class Tile extends StackPane {
 
     private boolean selected = false;

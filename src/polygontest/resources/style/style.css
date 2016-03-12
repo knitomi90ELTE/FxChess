@@ -10,3 +10,7 @@
 .passive-tile {
     -fx-stroke: black;
 }
+
+.my-label {
+    -fx-font-size: 25;
+}

@@ -2,9 +2,6 @@ package polygontest.helper;
 
 import polygontest.pieces.*;
 
-/**
- * Created by knizner on 2016.03.12..
- */
 public class PieceGenerator {
 
     private static final String WPawn = "polygontest/resources/pieces/WPawn.png";

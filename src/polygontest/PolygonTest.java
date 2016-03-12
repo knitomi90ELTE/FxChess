@@ -1,38 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package polygontest;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import polygontest.gui.ChessGrid;
+import polygontest.gui.Statusbar;
 
-/**
- *
- * @author knizner
- */
 public class PolygonTest extends Application {
 
+    Statusbar statusbar;
+    BorderPane borderPane;
     ChessGrid board;
     Scene scene;
 
     @Override
     public void start(Stage primaryStage) {
 
-        board = new ChessGrid();
-        scene = new Scene(board, 800, 800);
+        borderPane = new BorderPane();
+        statusbar = new Statusbar();
+        board = new ChessGrid(statusbar);
+        borderPane.setBottom(statusbar);
+        borderPane.setCenter(board);
+        scene = new Scene(borderPane, 800, 850);
         scene.getStylesheets().add("polygontest/resources/style/style.css");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         launch(args);
     }

@@ -3,19 +3,18 @@ package polygontest.gui;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import polygontest.helper.Coord;
 import polygontest.helper.PieceGenerator;
+import polygontest.pieces.King;
 import polygontest.pieces.Piece;
 import polygontest.player.Player;
 
-/**
- * Created by knizner on 2016.03.12..
- */
 public class ChessGrid extends GridPane{
 
+
+    Statusbar statusbar;
 
     private Piece selectedPiece = null;
     private Tile selectedTile = null;
@@ -24,10 +23,10 @@ public class ChessGrid extends GridPane{
     private Player PlayerDark;
 
     private int playerOnTurn = 0;
+    private Player[] players;
 
-
-
-    public ChessGrid() {
+    public ChessGrid(Statusbar statusbar) {
+        this.statusbar = statusbar;
         initPlayers();
         initField();
         initListener();
@@ -36,6 +35,7 @@ public class ChessGrid extends GridPane{
     private void initPlayers() {
         PlayerLight = new Player(0);
         PlayerDark = new Player(1);
+        players = new Player[]{PlayerLight, PlayerDark};
     }
 
     private void initField(){
@@ -49,13 +49,11 @@ public class ChessGrid extends GridPane{
                     tile.setPiece(p);
                     PlayerDark.addPiece(p);
                 }
-
                 if(row == 6 || row == 7){
                     Piece p = PieceGenerator.getPiece(c);
                     tile.setPiece(p);
                     PlayerLight.addPiece(p);
                 }
-
                 this.add(tile, col, row);
             }
         }
@@ -68,46 +66,77 @@ public class ChessGrid extends GridPane{
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-
                 Tile clicked = getClicked(e);
                 if(clicked == null){ //jó helyre kattintott
                     return;
                 }
-
-
-
                 if(selectedPiece == null){ //nincs kiválasztva bábú
                     selectPiece(clicked);
                 } else { //van kiválasztva bábú
-
-                    if(!clicked.isHasPiece()){ //olyan helyre akarja rakni, ahol nincs bábú
-                        movePiece(clicked);
-                    }else{ //rossz helyre akarja rakni
-                        showAlertMessage();
-                    }
-                    selectedTile.changeState();
-                    selectedPiece = null;
-                    selectedTile = null;
-
+                    movePiece(clicked);
                 }
             }
         });
     }
 
-    private void showAlertMessage() {
-        Alert alert = new Alert(Alert.AlertType.ERROR, "Foglalt mező", ButtonType.CLOSE);
-        alert.show();
+    private void setSelectionsNull(){
+        selectedPiece = null;
+        selectedTile = null;
+    }
+
+    private void handleMoveError(){
+        selectedTile.changeState();
+        setSelectionsNull();
+        showInvalidMoveError();
     }
 
     private void movePiece(Tile clicked) {
+        if(clicked.isHasPiece()){
+            Piece clickedPiece = clicked.getPiece();
+            if(currentPlayer().isOwner(clickedPiece)){
+                if(clickedPiece.equals(selectedPiece)){
+                    selectedTile.changeState();
+                    setSelectionsNull();
+                }else{
+                    handleMoveError();
+                }
+                return;
+            } else {
+                if(clickedPiece instanceof King){
+                    handleMoveError();
+                    return;
+                }
+                otherPlayer().removePiece(clickedPiece);
+                currentPlayer().setScore(currentPlayer().getScore() + clickedPiece.getValue());
+            }
+        }
         selectedTile.removePiece();
         clicked.setPiece(selectedPiece);
+        selectedTile.changeState();
+        setSelectionsNull();
+        playerOnTurn = (playerOnTurn + 1) % 2;
+        statusbar.updateScores(PlayerLight.getScore(), PlayerDark.getScore());
+        statusbar.switchActive(playerOnTurn);
+
     }
 
     private void selectPiece(Tile clicked) {
-        selectedTile = clicked;
-        selectedTile.changeState();
-        selectedPiece = selectedTile.getPiece();
+
+        if(clicked.isHasPiece()){
+            Piece p = clicked.getPiece();
+            if(currentPlayer().isOwner(p)){
+                selectedTile = clicked;
+                selectedTile.changeState();
+                selectedPiece = clicked.getPiece();
+            } else {
+                showInvalidSelectionError();
+            }
+        }else{
+            System.err.println("No piece on " + clicked.getPosition().toString());
+        }
+
+
+
     }
 
     private Tile getClicked(MouseEvent e){
@@ -121,8 +150,26 @@ public class ChessGrid extends GridPane{
         return null;
     }
 
-    private void debug(String message){
-        System.out.println(message);
+    private Player currentPlayer(){
+        return players[playerOnTurn];
+    }
+    private Player otherPlayer(){
+        return players[(playerOnTurn+1)%2];
+    }
+
+    private void showInvalidSelectionError() {
+        Alert alert = new Alert(Alert.AlertType.ERROR, "Érvénytelen kijelölés");
+        alert.show();
+    }
+
+    private void showInvalidMoveError() {
+        Alert alert = new Alert(Alert.AlertType.ERROR, "Szabálytalan lépés");
+        alert.show();
+    }
+
+    private void showReservedTileError() {
+        Alert alert = new Alert(Alert.AlertType.ERROR, "Foglalt mező");
+        alert.show();
     }
 
 

@@ -1,0 +1,25 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="FxChess">
+    <output-path>$PROJECT_DIR$/out/artifacts/FxChess</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="polygontest.PolygonTest" />
+        <option name="description" value="Simple chess app" />
+        <option name="height" value="850" />
+        <option name="htmlParamFile" value="" />
+        <option name="paramFile" value="" />
+        <option name="title" value="FxChess" />
+        <option name="vendor" value="Knizner Tamás" />
+        <option name="width" value="800" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="FxChess.jar">
+        <element id="module-output" name="FxChess" />
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/manifest.mf" output-file-name="MANIFEST.MF" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
