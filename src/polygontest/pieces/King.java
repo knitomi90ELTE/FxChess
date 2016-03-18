@@ -15,7 +15,8 @@ public class King extends Piece {
 
     @Override
     public boolean canMoveThere(Coord c) {
-        if((c.getX() == position.getX()+1 || c.getX() == position.getX()-1) && (c.getY() == position.getY()+1 || c.getY() == position.getY()-1)){
+        if((c.getX() == position.getX()+1 || c.getX() == position.getX()-1 || c.getX() == position.getX()) &&
+           (c.getY() == position.getY()+1 || c.getY() == position.getY()-1 || c.getY() == position.getY())){
             return true;
         }
         return false;

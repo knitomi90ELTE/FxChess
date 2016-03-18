@@ -14,6 +14,6 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMoveThere(Coord c) {
-        return false;
+        return true;
     }
 }

@@ -14,6 +14,7 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMoveThere(Coord c) {
-        return false;
+
+        return position.getX() == c.getX() || position.getY() == c.getY();
     }
 }
